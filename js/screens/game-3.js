@@ -1,42 +1,29 @@
-import statsScreen from './stats';
+import game1Screen from './game-1';
 import * as utils from '../utils';
+import {levels} from '../data';
+import renderOption from '../game-option';
+import {changeGameScreen} from "../changeScreen";
+import renderStats from '../stats';
 
-const html = `<div class="game">
-    <p class="game__task">Найдите рисунок среди изображений</p>
+export default (state) => {
+  const html = `<div class="game">
+    <p class="game__task">${levels[state.level].description}</p>
     <form class="game__content  game__content--triple">
-      <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option  game__option--selected">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-    </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
-  </div>`;
+      ${renderOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      ${renderOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      ${renderOption(`http://placehold.it/304x455`, `Option 1`, 304, 455)}
+      </form>
+      ${renderStats(state.results)}
+    </div>`;
 
-const element = utils.getElementFromTemplate(html);
-const gameOptionList = element.querySelectorAll(`.game__option`);
+  const element = utils.getElementFromTemplate(html);
+  const gameOptionList = element.querySelectorAll(`.game__option`);
 
-Array.from(gameOptionList).forEach((item) => {
-  item.addEventListener(`click`, () => {
-    utils.showScreen(statsScreen, true);
+  Array.from(gameOptionList).forEach((item) => {
+    item.addEventListener(`click`, () => {
+      changeGameScreen(state, game1Screen);
+    });
   });
-});
 
-export default element;
+  return element;
+};

@@ -10,6 +10,10 @@
 
   margin-bottom: 40px;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   td {
     border: 10px solid transparent;
   }
