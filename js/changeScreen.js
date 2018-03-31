@@ -1,5 +1,5 @@
 import statsScreen from './screens/stats';
-import {levels} from './data';
+import {levels} from './data/data';
 import {showScreen} from './utils';
 
 export const changeGameScreen = (state, screenFunction) => {

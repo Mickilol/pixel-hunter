@@ -1,4 +1,4 @@
-import {statsResultList} from './data';
+import {statsResultList} from './data/data';
 
 export default (resultsList = []) => {
   return `<div class="stats">

@@ -1,6 +1,6 @@
 import game1Screen from './game-1';
 import * as utils from '../utils';
-import {initialState} from "../data";
+import {initialState} from "../data/data";
 
 const html = `<div class="rules">
     <h1 class="rules__title">Правила</h1>

@@ -1,6 +1,6 @@
 import game2Screen from './game-2';
 import * as utils from '../utils';
-import {levels} from "../data";
+import {levels} from "../data/data";
 import renderGameOption from "../game-option";
 import {changeGameScreen} from '../changeScreen';
 import renderStats from '../stats';
