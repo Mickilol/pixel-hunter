@@ -1,4 +1,3 @@
-import introScreen from './screens/intro';
-import {showScreen} from "./utils";
+import Application from './application';
 
-showScreen(introScreen);
+Application.init();

@@ -1,21 +1,35 @@
-import introScreen from './screens/intro';
-import * as utils from './utils';
+import Application from "./application";
+import {initialState} from './data/data';
 
-const backBtnHtml = `<div class="header__back">
+const createHeart = (count, type) => {
+  return new Array(count)
+    .fill(`<img src="img/heart__${type}.svg" class="game__heart" alt="Life" width="32" height="32">`)
+    .join(` `);
+};
+
+const createGameStats = ({lives, time}) => {
+  return `
+  <h1 class="game__timer">${time}</h1>
+  <div class="game__lives">
+    ${createHeart(initialState.lives - lives, `empty`)}
+    ${createHeart(lives, `full`)}
+  </div>`;
+};
+
+export const onBack = () => {
+  Application.showWelcome();
+};
+
+export default (state = null) => {
+  const content = state ? createGameStats(state) : ``;
+  return `
+  <header class="header">
+    <div class="header__back">
       <span class="back">
         <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
         <img src="img/logo_small.png" width="101" height="44">
       </span>
-    </div>`;
-
-const header = document.createElement(`header`);
-header.className = `header`;
-header.innerHTML = backBtnHtml;
-
-const backBtn = header.querySelector(`.header__back`);
-backBtn.addEventListener(`click`, () => {
-  utils.showScreen(introScreen);
-});
-
-
-export const createHeader = () => header;
+    </div>
+    ${content}
+  </header>`;
+};

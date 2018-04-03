@@ -1,30 +1,17 @@
-import {createHeader} from "./header";
+export const resizeImage = (frame, image) => {
+  let multiplier = 1;
 
-const mainNode = document.querySelector(`.central`);
-const mainCentralContentNode = document.querySelector(`#main`);
-
-export const getElementFromTemplate = (html) => {
-  return new DOMParser().parseFromString(html, `text/html`).querySelector(`div`);
-};
-
-const clearMainNode = () => {
-  while (mainCentralContentNode.firstChild) {
-    mainCentralContentNode.removeChild(mainCentralContentNode.firstChild);
-  }
-};
-
-export const showScreen = (element, headerNeeds = false) => {
-  const headerNode = mainNode.querySelector(`header`);
-
-  if (headerNode) {
-    mainNode.removeChild(headerNode);
+  if (image.width > frame.width) {
+    multiplier = frame.width / image.width;
   }
 
-  if (headerNeeds) {
-    mainNode.insertBefore(createHeader(), mainCentralContentNode);
+  if (image.height * multiplier > frame.height) {
+    multiplier = frame.height / image.height;
   }
 
-  clearMainNode();
-  mainCentralContentNode.appendChild(element);
+  return {
+    width: image.width * multiplier,
+    height: image.height * multiplier
+  };
 };
 

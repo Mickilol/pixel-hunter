@@ -1,7 +1,12 @@
+import AbstractView from '../../abstract-view';
+import renderHeader from '../../header';
 
-import * as utils from '../utils';
+export default class extends AbstractView {
 
-const html = `<div class="result">
+  get template() {
+    return `
+    ${renderHeader()}
+    <div class="result">
     <h1>Победа!</h1>
     <table class="result__table">
       <tr>
@@ -101,8 +106,17 @@ const html = `<div class="result">
       </tr>
     </table>
   </div>`;
+  }
 
-const element = utils.getElementFromTemplate(html);
+  bind() {
+    const backBtn = this.element.querySelector(`.back`);
 
+    backBtn.addEventListener(`click`, () => {
+      this.onBack();
+    });
+  }
 
-export default element;
+  onBack() {
+
+  }
+}

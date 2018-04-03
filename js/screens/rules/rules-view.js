@@ -1,8 +1,11 @@
-import game1Screen from './game-1';
-import * as utils from '../utils';
-import {initialState} from "../data/data";
+import AbstractView from '../../abstract-view';
+import renderHeader from '../../header';
 
-const html = `<div class="rules">
+export default class extends AbstractView {
+  get template() {
+    return `
+    ${renderHeader()}
+    <div class="rules">
     <h1 class="rules__title">Правила</h1>
     <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
       src="img/photo_icon.png" width="16" height="16"> или рисунок <img
@@ -18,18 +21,32 @@ const html = `<div class="rules">
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </div>`;
+  }
 
-const element = utils.getElementFromTemplate(html);
-const nextBtn = element.querySelector(`.continue`);
-const nameInput = element.querySelector(`.rules__input`);
+  bind() {
+    const backBtn = this.element.querySelector(`.back`);
+    const nextBtn = this.element.querySelector(`.continue`);
+    const nameInput = this.element.querySelector(`.rules__input`);
 
-nameInput.addEventListener(`input`, () => {
-  nextBtn.disabled = nameInput.value.length === 0;
-});
+    nameInput.addEventListener(`input`, () => {
+      nextBtn.disabled = nameInput.value.length === 0;
+    });
 
 
-nextBtn.addEventListener(`click`, () => {
-  utils.showScreen(game1Screen(initialState), true);
-});
+    nextBtn.addEventListener(`click`, () => {
+      this.onStart();
+    });
 
-export default element;
+    backBtn.addEventListener(`click`, () => {
+      this.onBack();
+    });
+  }
+
+  onStart() {
+
+  }
+
+  onBack() {
+
+  }
+}
