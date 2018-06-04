@@ -4,11 +4,8 @@ import Application from '../../application';
 
 export default class {
 
-  constructor() {
-    this._view = new WelcomeView();
-  }
-
   init() {
+    this._view = new WelcomeView();
     this._view.show();
 
     this._view.onStart = () => {

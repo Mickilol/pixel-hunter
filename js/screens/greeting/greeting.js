@@ -3,11 +3,8 @@ import Application from '../../application';
 
 export default class {
 
-  constructor() {
-    this._view = new GreetingView();
-  }
-
   init() {
+    this._view = new GreetingView();
     this._view.show();
 
     this._view.onNext = () => {

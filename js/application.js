@@ -1,8 +1,11 @@
+import Preloader from './screens/preloader/preloader';
 import Welcome from './screens/welcome/welcome';
 import Greeting from './screens/greeting/greeting';
 import Rules from './screens/rules/rules';
 import Game from './screens/games/game';
 import Statistic from './screens/statistic/statistic';
+import Model from "./model";
+import {preloadImages} from './utils';
 
 const ControllerID = {
   WELCOME: ``,
@@ -16,13 +19,35 @@ const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
 class App {
 
-  constructor() {
+  init() {
+    this.showPreloader();
+
+    this.model = new class extends Model {
+      get urlRead() {
+        return `https://intensive-ecmascript-server-srmhvdwcks.now.sh/pixel-hunter/questions`;
+      }
+
+      get urlWrite() {
+        return `https://intensive-ecmascript-server-srmhvdwcks.now.sh/pixel-hunter/stats/admin`;
+      }
+    }();
+
+    this.model.load()
+      .then((data) => {
+        preloadImages(data)
+          .then(() => this._setup(data))
+          .then(() => this._changeController(getControllerIDFromHash(location.hash)));
+      })
+      .catch(window.console.error);
+  }
+
+  _setup(data) {
     this._routes = {
-      [ControllerID.WELCOME]: Welcome,
-      [ControllerID.GREETING]: Greeting,
-      [ControllerID.RULES]: Rules,
-      [ControllerID.GAME]: Game,
-      [ControllerID.STATISTIC]: Statistic,
+      [ControllerID.WELCOME]: new Welcome(),
+      [ControllerID.GREETING]: new Greeting(),
+      [ControllerID.RULES]: new Rules(),
+      [ControllerID.GAME]: new Game(data),
+      [ControllerID.STATISTIC]: new Statistic(),
     };
 
     window.onhashchange = () => {
@@ -31,12 +56,17 @@ class App {
   }
 
   _changeController(route = ``) {
-    const Controller = this._routes[route];
-    new Controller().init();
+    const GameStateClass = this._routes[route];
+
+    if (!GameStateClass) {
+      return;
+    }
+
+    GameStateClass.init();
   }
 
-  init() {
-    this._changeController(getControllerIDFromHash(location.hash));
+  showPreloader() {
+    new Preloader().init();
   }
 
   showWelcome() {

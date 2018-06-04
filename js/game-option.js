@@ -1,8 +1,11 @@
-import renderAnswer from "./game-answer";
+import renderAnswer from './game-answer';
 
-export default (image, alt, width, height, questionGroup) => {
-  return `<div class="game__option">
-        <img src="${image}" alt="${alt}" width="${width}" height="${height}">
-        ${questionGroup ? renderAnswer(questionGroup) : ``}
-        </div>`;
+export default (question, alt, answerGroupName, index) => {
+  window.console.log(question);
+  const optionHtml = `<div class="game__option" data-index="${index}">
+        <img src="${question.image.url}" alt="${alt}" width="${question.image.width}" height="${question.image.height}">
+        ${answerGroupName ? renderAnswer(answerGroupName) : ``}
+      </div>`;
+
+  return optionHtml;
 };

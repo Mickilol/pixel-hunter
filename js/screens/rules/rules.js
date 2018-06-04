@@ -4,11 +4,8 @@ import {onBack} from "../../header";
 
 export default class {
 
-  constructor() {
-    this._view = new RulesView();
-  }
-
   init() {
+    this._view = new RulesView();
     this._view.show();
 
     this._view.onStart = () => {

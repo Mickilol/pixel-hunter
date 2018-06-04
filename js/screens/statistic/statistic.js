@@ -1,16 +1,17 @@
 import StatisticView from './statistic-view';
 import {onBack} from "../../header";
+import StatisticModel from './statistic-model';
 
 export default class {
 
-  constructor() {
-    this._view = new StatisticView();
-  }
-
   init() {
-    this._view.show();
+    StatisticModel.load()
+      .then((data) => {
+        this._view = new StatisticView(data);
+        this._view.show();
 
-    this._view.onBack = onBack;
+        this._view.onBack = onBack;
+      });
   }
 
 }

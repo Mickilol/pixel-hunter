@@ -136,7 +136,7 @@ describe(`Game`, () => {
 
     describe(`Successful finish`, () => {
       it(`should add extra points for remain lives`, () => {
-        assert.equal(countPoints({time: 30, points: 500, lives: 3, question: 0}, false).points, 650);
+        assert.equal(countPoints({time: 30, points: 500, lives: 3, question: 9}, false).points, 650);
       });
     });
 
