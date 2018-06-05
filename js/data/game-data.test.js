@@ -122,46 +122,40 @@ describe(`Game`, () => {
   describe(`#Count points`, () => {
     describe(`Correct answer`, () => {
       it(`should add 100 points for correct answer (between 10 and 20 sec)`, () => {
-        assert.equal(countPoints({time: 15, points: 0}, true).points, 100);
+        assert.equal(countPoints(`correct`), 100);
       });
 
       it(`should add 50 points for slow answer (between 20 and 30 sec)`, () => {
-        assert.equal(countPoints({time: 8, points: 0}, true).points, 50);
+        assert.equal(countPoints(`slow`), 50);
       });
 
       it(`should add 150 points for fast answer (between 0 and 10 sec)`, () => {
-        assert.equal(countPoints(initialState, true).points, 150);
-      });
-    });
-
-    describe(`Successful finish`, () => {
-      it(`should add extra points for remain lives`, () => {
-        assert.equal(countPoints({time: 30, points: 500, lives: 3, question: 9}, false).points, 650);
+        assert.equal(countPoints(`fast`), 150);
       });
     });
 
     describe(`Incorrect answer`, () => {
       it(`shouldn't add points`, () => {
-        assert.equal(countPoints(initialState, false).points, initialState.points);
+        assert.equal(countPoints(`wrong`), 0);
       });
     });
 
     describe(`Incorrect parameters`, () => {
-      const countPointsWithIncorrectParameters = (state, answer) => {
-        countPoints(state, answer);
+      const countPointsWithIncorrectParameters = (answerType) => {
+        countPoints(answerType);
       };
 
       it(`should throw TypeError`, () => {
         assert.throws(() => {
-          countPointsWithIncorrectParameters({}, true);
+          countPointsWithIncorrectParameters(true);
         }, TypeError);
 
         assert.throws(() => {
-          countPointsWithIncorrectParameters(initialState, `string`);
+          countPointsWithIncorrectParameters(initialState);
         }, TypeError);
 
         assert.throws(() => {
-          countPointsWithIncorrectParameters([], false);
+          countPointsWithIncorrectParameters([]);
         }, TypeError);
       });
     });

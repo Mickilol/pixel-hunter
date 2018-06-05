@@ -69,7 +69,7 @@ export const setLives = (state, lives) => {
 
 export const countPoints = (answerType) => {
   if (typeof answerType !== `string`) {
-    throw new Error(`Parameters shouldn't be undefined or incorrect parameter type.`);
+    throw new TypeError(`Parameters shouldn't be undefined or incorrect parameter type.`);
   }
 
   let points = 0;
